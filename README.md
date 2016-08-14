@@ -1,3 +1,27 @@
+
+Wedding PhotoBooth
+=================
+
+Create, review and share photos in realtime.
+
+#### Capture Screen
+* Start button
+* Camera Revert button
+* Once start, it should start taking pictures 6 times
+* 5 seconds between the photo captures
+
+#### Photo Picker Screen
+* User can pick 4 out of 6 pictures
+* Cancel or Okay Button (maybe FAB buttons)
+* Choose different filter in a horizontal scrollview
+
+#### Post capture
+* Show the user the final picture with filtering and wedding background
+* Background service uploads the photos to flickr api?
+* Once the upload completes, write photo metadata to API
+* Generate an ID (or a number) that uniquely associates with that section
+
+
 Flying PhotoBooth
 =================
 
@@ -67,16 +91,8 @@ If you plan on distributing a fork of these applications, you must replace the f
 * Application icons and all branded graphics
 * API keys
 
-### Contact
-
-Please use the [issue tracker](https://github.com/benhylau/flying-photo-booth/issues) for feature requests and reporting of bugs. Pull requests are welcome, but for custom features please fork instead. One main reason for open-sourcing this project is to allow for use-case-specific customizations without feature-bloating the mainline products, so fork away!
-
-You can also contact me through the [Ground Up Works](http://www.groundupworks.com) channels.
-
 ### License
 
-Copyright (c) 2012-2016 Benedict Lau
+Copyright (c) 2016 EXTP Production
 
 Source code licensed under the [GPLv3](http://www.gnu.org/licenses/gpl-3.0.html)
-
-Application names, icons and branded graphics are properties of [Ground Up Works](http://www.groundupworks.com)
