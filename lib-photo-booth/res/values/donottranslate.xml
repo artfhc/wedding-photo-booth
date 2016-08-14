@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Camera Preferences -->
+    <string name="pref__camera_key">pref__camera</string>
+
+    <!-- Arrangement Preferences -->
+    <string name="pref__arrangement_key">pref__arrangement</string>
+    <string name="pref__arrangement_default">Vertical</string>
+    <string name="pref__arrangement_vertical">Vertical</string>
+    <string name="pref__arrangement_horizontal">Horizontal</string>
+    <string name="pref__arrangement_box">Box</string>
+
+    <!-- Number of Photos Preference -->
+    <string name="pref__number_of_photos_key">pref__number_of_photos</string>
+    <string name="pref__number_of_photos_default">2</string>
+    <string name="pref__number_of_photos_one">1</string>
+    <string name="pref__number_of_photos_two">2</string>
+    <string name="pref__number_of_photos_three">3</string>
+    <string name="pref__number_of_photos_four">4</string>
+
+    <!-- Filter Preferences -->
+    <string name="pref__filter_key">pref__filter</string>
+    <string name="pref__filter_default">None</string>
+    <string name="pref__filter_none">None</string>
+    <string name="pref__filter_bw">Black &amp; White</string>
+    <string name="pref__filter_bw_mixed">Mixed Black &amp; White</string>
+    <string name="pref__filter_sepia">Sepia</string>
+    <string name="pref__filter_sepia_mixed">Mixed Sepia</string>
+    <string name="pref__filter_line_art">Line Art</string>
+
+    <!-- Trigger Preferences -->
+    <string name="pref__trigger_key">pref__trigger</string>
+    <string name="pref__trigger_default">Manual</string>
+    <string name="pref__trigger_manual">Manual</string>
+    <string name="pref__trigger_countdown">Countdown</string>
+    <string name="pref__trigger_burst">Burst</string>
+
+</resources>

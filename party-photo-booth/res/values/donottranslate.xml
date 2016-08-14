@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Image Helper -->
+    <string name="image_helper__image_folder_name">PartyPhotoBooth</string>
+    <string name="image_helper__image_filename_prefix">ppb</string>
+
+    <!-- Facebook Client Overrides -->
+    <string name="wings_facebook__app_id">321386107984400</string>
+    <string name="wings_facebook__app_album_default_name">Party PhotoBooth Photos</string>
+
+    <!-- Dropbox Client Overrides -->
+    <string name="wings_dropbox__app_key">o8qu7uepb92xtzz</string>
+    <string name="wings_dropbox__app_secret">cvqpxd623eii9ew</string>
+    <string name="wings_dropbox__app_scheme">db-o8qu7uepb92xtzz</string>
+    <string name="wings_dropbox__photo_folder">Photo Strips</string>
+
+    <!-- Kiosk Mode -->
+    <string name="pref__kiosk_mode_enabled_key">pref__kiosk_mode_enabled_key</string>
+    <string name="pref__kiosk_mode_setup_completed_key">pref__kiosk_mode_setup_completed_key</string>
+    <string name="pref__kiosk_mode_password_key">pref__kiosk_mode_password_key</string>
+
+</resources>

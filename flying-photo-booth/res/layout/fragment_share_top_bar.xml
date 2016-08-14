@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_color">
+
+    <ImageButton
+        android:id="@+id/share_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/selector_titlebar_button"
+        android:padding="12dip"
+        android:src="@drawable/ic_menu_share" />
+
+    <ImageButton
+        android:id="@+id/dropbox_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/share_button"
+        android:background="@drawable/selector_titlebar_button"
+        android:padding="12dip"
+        android:src="@drawable/selector_button_dropbox"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:id="@+id/facebook_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/dropbox_button"
+        android:background="@drawable/selector_titlebar_button"
+        android:padding="12dip"
+        android:src="@drawable/selector_button_facebook"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:id="@+id/gcp_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/facebook_button"
+        android:background="@drawable/selector_titlebar_button"
+        android:padding="12dip"
+        android:src="@drawable/selector_button_gcp"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:id="@+id/beam_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/gcp_button"
+        android:background="@drawable/selector_titlebar_button"
+        android:padding="12dip"
+        android:src="@drawable/ic_menu_cc"
+        android:visibility="gone" />
+
+</RelativeLayout>

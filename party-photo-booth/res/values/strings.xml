@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Party PhotoBooth</string>
+
+    <!-- Setup -->
+    <string name="setup__button_text_next">Next</string>
+
+    <!-- Event Info Setup Fragment -->
+    <string name="event_info_setup__title">Event Information</string>
+    <string name="event_info_setup__event_title">Title</string>
+    <string name="event_info_setup__event_line_one_hint">Line one</string>
+    <string name="event_info_setup__event_line_two_hint">Line two</string>
+    <string name="event_info_setup__event_logo">Logo</string>
+    <string name="event_info_setup__event_logo_uri_none">None</string>
+    <string name="event_info_setup__event_logo_chooser_title">Select logo</string>
+    <string name="event_info_setup__event_date">Date</string>
+    <string name="event_info_setup__event_date_hidden">Hide date</string>
+    <string name="event_info_setup__error_logo">Unable to load selected logo</string>
+
+    <!-- Photo Booth Setup Fragment -->
+    <string name="photo_booth_setup__title">Photo Booth Setup</string>
+    <string name="photo_booth_setup__mode">Mode</string>
+    <string name="photo_booth_setup__theme">Theme</string>
+    <string name="photo_booth_setup__template">Photo strip</string>
+
+    <!-- Share Services Setup Fragment -->
+    <string name="share_services_setup__title">Share Services</string>
+    <string name="share_services_setup__facebook_title">Upload photo strips to Facebook</string>
+    <string name="share_services_setup__dropbox_title">Upload photo strips to Dropbox</string>
+    <string name="share_services_setup__gcp_title">Print with Google Cloud Print</string>
+    <string name="share_services_setup__disabled">Disabled</string>
+    <string name="share_services_setup__notice_enabled">Tell guests where to find their photos</string>
+
+    <!-- Photo Booth Mode Adapter -->
+    <string name="photo_booth_mode_adapter__self_serve_display_name">Self-serve</string>
+    <string name="photo_booth_mode_adapter__self_serve_description">Front-facing camera &amp; count down</string>
+    <string name="photo_booth_mode_adapter__automatic_display_name">Automatic</string>
+    <string name="photo_booth_mode_adapter__automatic_description">Self-serve with a single click</string>
+    <string name="photo_booth_mode_adapter__photographer_display_name">Photographer</string>
+    <string name="photo_booth_mode_adapter__photographer_description">Back-facing camera</string>
+
+    <!-- Photo Booth Theme Adapter -->
+    <string name="photo_booth_theme_adapter__blue_display_name">Blue stripes</string>
+    <string name="photo_booth_theme_adapter__pink_display_name">Pink stripes</string>
+    <string name="photo_booth_theme_adapter__orange_display_name">Orange stripes</string>
+    <string name="photo_booth_theme_adapter__green_display_name">Green stripes</string>
+    <string name="photo_booth_theme_adapter__minimalist_display_name">Minimalist</string>
+    <string name="photo_booth_theme_adapter__vintage_display_name">Vintage</string>
+    <string name="photo_booth_theme_adapter__carbon_display_name">Carbon</string>
+
+    <!-- Photo Strip Template Adapter -->
+    <string name="photo_strip_template_adapter__single_display_name">Single</string>
+    <string name="photo_strip_template_adapter__single_description">One panel</string>
+    <string name="photo_strip_template_adapter__2_vertical_display_name">Vertical 2</string>
+    <string name="photo_strip_template_adapter__2_vertical_description">Two panels top to bottom</string>
+    <string name="photo_strip_template_adapter__2_horizontal_display_name">Horizontal 2</string>
+    <string name="photo_strip_template_adapter__2_horizontal_description">Two panels left to right</string>
+    <string name="photo_strip_template_adapter__3_vertical_display_name">Vertical 3</string>
+    <string name="photo_strip_template_adapter__3_vertical_description">Three panels top to bottom</string>
+    <string name="photo_strip_template_adapter__3_horizontal_display_name">Horizontal 3</string>
+    <string name="photo_strip_template_adapter__3_horizontal_description">Three panels left to right</string>
+    <string name="photo_strip_template_adapter__4_vertical_display_name">Vertical 4</string>
+    <string name="photo_strip_template_adapter__4_vertical_description">Four panels top to bottom</string>
+    <string name="photo_strip_template_adapter__4_horizontal_display_name">Horizontal 4</string>
+    <string name="photo_strip_template_adapter__4_horizontal_description">Four panels left to right</string>
+    <string name="photo_strip_template_adapter__4_box_display_name">Box 4</string>
+    <string name="photo_strip_template_adapter__4_box_description">Four panels in a box</string>
+
+    <!-- Kiosk Mode -->
+    <string name="kiosk_mode__setup_message">Press &amp; hold top right corner to exit</string>
+    <string name="kiosk_mode__setup_password_label">Require passcode:</string>
+    <string name="kiosk_mode__setup_password_hint">none</string>
+    <string name="kiosk_mode__setup_button_ok_text">OK</string>
+    <string name="kiosk_mode__notification_title">Kiosk mode</string>
+    <string name="kiosk_mode__notification_msg">Press &amp; hold top right corner to exit</string>
+    <string name="kiosk_mode__start_msg">Entering Kiosk mode</string>
+    <string name="kiosk_mode__dialog_title">Exit</string>
+    <string name="kiosk_mode__dialog_password_hint">Passcode</string>
+    <string name="kiosk_mode__dialog_button_positive_text">OK</string>
+    <string name="kiosk_mode__dialog_button_negative_text">Cancel</string>
+    <string name="kiosk_mode__error_password">Passcode does not match</string>
+
+    <!-- Capture Fragment -->
+    <string name="capture__frame_count">%1$d of %2$d</string>
+    <string name="capture__error_camera_dialog_title">Camera unavailable</string>
+    <string name="capture__error_camera_dialog_message_none">This application requires a camera on your device.</string>
+    <string name="capture__error_camera_dialog_message_in_use">Your camera may be in use by another application.</string>
+    <string name="capture__error_camera_crash">Restarting confused camera</string>
+
+    <!-- Photo Strip Fragment -->
+    <string name="photostrip__title_text">PHOTO\nBOOTH</string>
+    <string name="photostrip__button_text_discard">Discard</string>
+    <string name="photostrip__error_new_photo">Unable to add new photo</string>
+    <string name="photostrip__error_missing_photo">One more photo needed</string>
+    <string name="photostrip__error_submission">Unable to submit the current photo strip</string>
+
+    <!-- Error Dialog Fragment -->
+    <string name="error__dialog_button_text">Exit</string>
+
+    <!-- Confirmation Fragment -->
+    <string name="confirmation__message">Thank you for using\n%1$s</string>
+    <string name="confirmation__button_submit_text">Submit</string>
+
+    <!-- Notice Fragment -->
+    <string name="notice__title_text">Find your photo strip</string>
+    <string name="notice__button_ok_text">OK</string>
+
+</resources>

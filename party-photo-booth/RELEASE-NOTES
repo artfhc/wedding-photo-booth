@@ -1,0 +1,71 @@
+VERSION 1.14
+- Added feature to publish to albums owned by a Facebook Page
+- Updated to Wings 1.0.4 containing various GCP fixes
+- Released source code under GPLv3
+
+VERSION 1.13
+- Added Vintage and Carbon themes
+- Improved Google Cloud Print reliability
+- Selectable number of copies to print
+- Fixed Facebook linking issue observed on some devices
+
+VERSION 1.12
+- Improved Google Cloud Print reliability
+
+VERSION 1.11
+- Added support for triggering with Muku Shuttr, other Bluetooth remotes and keyboards
+- Added print support using Google Cloud Print
+- Added sharing to Facebook Pages
+- Fixed issues related to Android Lollipop
+- Fixed bugs related to account linking
+
+VERSION 1.10
+- Added support for triggering with Muku Shuttr, other Bluetooth remotes and keyboards
+- Added print support using Google Cloud Print
+- Added sharing to Facebook Pages
+- Fixed issues related to Android Lollipop
+
+VERSION 1.9
+- Abandoned
+
+VERSION 1.8
+- Added automated Self-serve mode
+- Added Minimalist theme
+- Fixed bug in the recent update where the capture button gets stuck in a disabled state
+
+VERSION 1.7
+- Added automated Self-serve mode
+- Added Minimalist theme
+
+VERSION 1.6
+- Abandoned
+
+VERSION 1.5
+- Added custom event logo selection
+- Audio feedback for timer and shutter
+
+VERSION 1.4
+- Added frame counter to capture screen
+- Dimming of system UI for a more immersive experience (on supported platforms) 
+- Fixed Dropbox linking and sharing (as a result of Dropbox's change in security policy, photo strips are now stored in your Dropbox's "Apps/Party PhotoBooth/Photo Strips" directory)
+
+VERSION 1.3
+- This release contains UI optimizations and fixes for all reported bugs.
+- Optimized camera preview layout
+- Made discard buttons more noticeable
+- Added protection against camera malfunction
+- Implemented proper ordering of photos in each photo strip
+- Fixed crashes observed on Nexus 7 and Motorola XOOM
+
+VERSION 1.2
+
+VERSION 1.1
+
+VERSION 1.0
+- Pick a photo strip template with optional event name and date
+- Select "Self-serve mode" to use front-facing camera and photo booth style timer, or "Photographer mode" to use back-facing camera
+- Link Facebook and Dropbox accounts for auto sharing, retries are automatically scheduled if network is unavailable
+- Keep the app in foreground with passcode-protected Kiosk mode
+- Photo booth style photo shoot with animated review panel
+- Find newly created photo strip in your Facebook album and Dropbox folder
+- Automatically return to the Capture screen for the next guest

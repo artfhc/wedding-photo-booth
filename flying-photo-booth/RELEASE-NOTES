@@ -1,0 +1,83 @@
+VERSION 3.9
+- Added feature to publish to albums owned by a Facebook Page
+- Updated to Wings 1.0.4 containing various GCP fixes
+- Released source code under GPLv3
+
+VERSION 3.8
+- Improved Google Cloud Print reliability
+- Selectable number of copies to print
+
+VERSION 3.7
+- Improved Google Cloud Print reliability
+
+VERSION 3.6
+- Added support for triggering with Muku Shuttr, other Bluetooth remotes and keyboards
+- Added print support using Google Cloud Print
+- Added sharing to Facebook Pages
+- Fixed bugs related to account linking
+
+VERSION 3.5 
+- Added support for triggering with Muku Shuttr, other Bluetooth remotes and keyboards
+- Added print support using Google Cloud Print
+- Added sharing to Facebook Pages
+
+VERSION 3.4
+- Audio feedback for timer and shutter
+
+VERSION 3.3
+- Fixed Dropbox linking and sharing (as a result of Dropbox's change in security policy, photo strips are now stored in your Dropbox's "Apps/Flying PhotoBooth/Photo Strips" directory)
+
+VERSION 3.2
+- This release contains UI optimizations and fixes for all reported bugs
+- Optimized camera preview layout
+- Added protection against camera malfunction
+- Fixed crashes observed on Nexus 7 and Motorola XOOM 
+
+VERSION 3.1
+- Improved camera configurations
+- Improved Wings to complete your shares even if the device is rebooted
+- Clicking on a notification opens up your newly shared photo in Facebook or Dropbox
+- Increased the maximum number of Facebook albums to show
+
+VERSION 3.0
+- New pretty UI
+- Configurable number of photos per photo strip
+- Wings, a smart sharing engine that supports one-click and auto share, and automatically schedules retries in the background if sharing fails
+- Facebook share with Wings supports sharing to any album and privacy level control
+- Dropbox share with Wings supports sharing to a dedicated app folder
+- Improved memory management
+
+VERSION 2.5
+- Improved the way a photo strip is displayed
+
+VERSION 2.4
+- Improved the way a photo strip is displayed
+
+VERSION 2.3
+- Burst mode to trigger captures 1 second apart
+- Improved Settings screen
+
+VERSION 2.2
+
+VERSION 2.1
+- Manual trigger support
+- Swipe-to-retake feature to quickly review each captured photo
+- Beam to compatible devices using Android Beam
+- Higher resolution photos
+- Sepia photo filters
+
+VERSION 2.0
+- Vertical, horizontal, and box photo strip arrangements
+- Photo filters applied to entire photo strip or every other photo
+
+VERSION 1.1
+- Crash on devices without a front-facing camera
+- Frozen camera preview when resuming the app
+
+VERSION 1.0
+- Front- and back-facing camera support
+- Auto-focus before each capture where hardware permits
+- Photo booth-style countdown timer
+- Preconfigured greyscale filter
+- Automatic adding of captured photo strip to the Gallery
+- Sharing through Email, WhatsApp, Facebook, Twitter, etc.
