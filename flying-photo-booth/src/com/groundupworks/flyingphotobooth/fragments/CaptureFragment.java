@@ -236,6 +236,12 @@ public class CaptureFragment extends Fragment {
 
         final Handler handler = new Handler(BaseApplication.getWorkerLooper());
         mCameraAudioHelper = new CameraAudioHelper(activity, R.raw.beep_once, handler);
+
+        // force to use box arrangement
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(getString(R.string.pref__arrangement_key),getString(R.string.pref__arrangement_box));
+        editor.commit();
     }
 
     @Override
@@ -314,9 +320,12 @@ public class CaptureFragment extends Fragment {
         /*
          * Reset frames.
          */
+        // force to use 4 photos
+        /*
         String numPhotosPref = preferences.getString(getString(R.string.pref__number_of_photos_key),
                 getString(R.string.pref__number_of_photos_default));
-        mFramesTotal = Integer.parseInt(numPhotosPref);
+                */
+        mFramesTotal = 4;//Integer.parseInt(numPhotosPref);
         mFrameIndex = 0;
         mFramesData = new byte[mFramesTotal][];
 
