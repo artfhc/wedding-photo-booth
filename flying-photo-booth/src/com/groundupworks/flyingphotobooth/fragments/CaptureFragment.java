@@ -299,6 +299,8 @@ public class CaptureFragment extends Fragment {
         mReviewStatus = (TextView) view.findViewById(R.id.review_status);
         mReviewImage = (ImageView) view.findViewById(R.id.review_image);
 
+        // hide preference button
+        mPreferencesButton.setVisibility(View.GONE);
         return view;
     }
 
@@ -382,6 +384,7 @@ public class CaptureFragment extends Fragment {
         }
 
         // Get trigger mode preference.
+        /*
         String triggerPref = preferences.getString(getString(R.string.pref__trigger_key),
                 getString(R.string.pref__trigger_default));
         if (triggerPref.equals(getString(R.string.pref__trigger_countdown))) {
@@ -391,6 +394,9 @@ public class CaptureFragment extends Fragment {
         } else {
             mTriggerMode = TRIGGER_MODE_MANUAL;
         }
+        */
+        // force to use countdown mode
+        mTriggerMode = TRIGGER_MODE_COUNTDOWN;
 
         // Configure title and start button text.
         mTitle.setText(String.format(getString(R.string.capture__title_frame), mFrameIndex + 1, mFramesTotal));
