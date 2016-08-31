@@ -17,6 +17,10 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/ping', function(req, res, next) {
+  res.send({ title: 'Express', content: 'Express content', count: 3 });
+});
+
 router.post('/file-upload', upload.single('thumbnail'), function(req, res, next) {
     console.log(req.body);
     console.log(req.file);

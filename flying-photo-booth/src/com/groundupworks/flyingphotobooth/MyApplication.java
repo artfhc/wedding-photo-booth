@@ -16,6 +16,9 @@
  */
 package com.groundupworks.flyingphotobooth;
 
+import android.support.annotation.Nullable;
+import com.groundupworks.flyingphotobooth.client.ServiceClient;
+import com.groundupworks.flyingphotobooth.client.ServiceGenerator;
 import com.groundupworks.lib.photobooth.framework.BaseApplication;
 
 /**
@@ -24,4 +27,16 @@ import com.groundupworks.lib.photobooth.framework.BaseApplication;
  * @author Benedict Lau
  */
 public class MyApplication extends BaseApplication {
+    private ServiceClient serviceClient;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        serviceClient = ServiceGenerator.createService(ServiceClient.class);
+    }
+
+    @Nullable
+    public ServiceClient getServiceClient() {
+        return serviceClient;
+    }
 }

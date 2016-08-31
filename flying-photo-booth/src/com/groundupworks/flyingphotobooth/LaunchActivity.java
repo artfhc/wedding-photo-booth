@@ -21,13 +21,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.WorkerThread;
+import android.util.Log;
 import android.view.KeyEvent;
 
+import com.groundupworks.flyingphotobooth.client.ServiceClient;
 import com.groundupworks.flyingphotobooth.fragments.CaptureFragment;
 import com.groundupworks.flyingphotobooth.fragments.ErrorDialogFragment;
 import com.groundupworks.lib.photobooth.framework.BaseFragmentActivity;
 import com.groundupworks.lib.photobooth.helpers.StorageHelper;
+import retrofit2.Call;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 /**
@@ -36,6 +41,8 @@ import java.lang.ref.WeakReference;
  * @author Benedict Lau
  */
 public class LaunchActivity extends BaseFragmentActivity {
+
+    private static final String TAG = LaunchActivity.class.getCanonicalName();
 
     /**
      * Worker handler for posting background tasks.
@@ -95,7 +102,40 @@ public class LaunchActivity extends BaseFragmentActivity {
                 }
             }
         });
+
+        mWorkerHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                final String message = pingTheServerAndReturnMessage();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e(TAG, "Message: " + message);
+                        // showSnackBar(message);
+                    }
+                });
+            }
+        });
     }
+
+    @WorkerThread
+    private String pingTheServerAndReturnMessage() {
+        ServiceClient serviceClient = ((MyApplication) getApplication()).getServiceClient();
+        Call<ServiceClient.Ping> pingCall = serviceClient.ping();
+        try {
+            ServiceClient.Ping ping = pingCall.execute().body();
+            return "Ping: " + ping.title + ", " + ping.content + ", " + ping.count;
+        } catch (IOException e) {
+            return "No pong: " + e.getMessage();
+        }
+    }
+
+//    @UiThread
+//    public void showSnackBar(@NonNull String description) {
+//        final View rootView = ((ViewGroup) this.findViewById(android.R.id.content)).getChildAt(0);
+//        Snackbar snackbar = Snackbar.make(rootView, description, Snackbar.LENGTH_LONG);
+//        snackbar.show();
+//    }
 
     @Override
     protected void onPause() {
