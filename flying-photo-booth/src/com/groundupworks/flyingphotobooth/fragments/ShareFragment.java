@@ -34,6 +34,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.groundupworks.flyingphotobooth.LaunchActivity;
@@ -50,6 +51,7 @@ import com.groundupworks.wings.gcp.GoogleCloudPrintEndpoint;
 import com.squareup.otto.Subscribe;
 
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Ui for the image confirmation screen.
@@ -147,6 +149,11 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
      */
     private OnSharedPreferenceChangeListener mDropboxLinkListener = null;
 
+    /**
+     * Unique Photo ID. May be null, generated when image is saved
+     */
+    private UUID mPhotoID = null;
+
     //
     // Views.
     //
@@ -163,6 +170,8 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
 
     private FrameLayout mPhotoStripContainer;
 
+    private TextView mPhotoIDTextView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /*
@@ -176,7 +185,13 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
         mGcpButton = (ImageButton) view.findViewById(R.id.gcp_button);
         mBeamButton = (ImageButton) view.findViewById(R.id.beam_button);
         mPhotoStripContainer = (FrameLayout) view.findViewById(R.id.photostrip_container);
+        mPhotoIDTextView = (TextView) view.findViewById(R.id.photo_id_textview);
 
+        mBeamButton.setVisibility(View.GONE);
+        mGcpButton.setVisibility(View.GONE);
+        mFacebookButton.setVisibility(View.GONE);
+        mDropboxButton.setVisibility(View.GONE);
+        mShareButton.setVisibility(View.GONE);
         return view;
     }
 
@@ -469,7 +484,10 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
                 break;
             case ShareController.JPEG_SAVED:
                 mJpegUri = Uri.parse("file://" + (String) msg.obj);
-
+                mPhotoID = UUID.randomUUID();
+                mPhotoIDTextView.setText("Your photo ID is:\n"+mPhotoID.toString());
+                // TODO: upload photo to file server
+                /*
                 // Enable sharing options.
                 mShareButton.setEnabled(true);
 
@@ -502,6 +520,7 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
                 // Request adding Jpeg to Android Gallery.
                 MediaScannerConnection.scanFile(appContext, new String[]{mJpegUri.getPath()},
                         new String[]{ImageHelper.JPEG_MIME_TYPE}, null);
+                */
                 break;
             case ShareController.GCP_SHARE_MARKED:
                 mGcpButton.setEnabled(false);

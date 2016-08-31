@@ -9,6 +9,13 @@
 
     <include layout="@layout/fragment_share_top_bar" />
 
+    <TextView
+        android:id="@+id/photo_id_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        style="@style/Text" />
+
     <!-- Main content -->
 
     <FrameLayout
