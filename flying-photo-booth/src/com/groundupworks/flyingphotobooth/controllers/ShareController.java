@@ -341,7 +341,7 @@ public class ShareController extends BaseController {
     }
 
     @WorkerThread
-    private void uploadMessageToServer(@NonNull MyApplication context, @NonNull ServiceClient.FileUploadPayload payload) {
+    private void uploadMessageToServer(@NonNull MyApplication context, @NonNull final ServiceClient.FileUploadPayload payload) {
         Log.i(TAG, "Ready to upload file: " + payload.file.getAbsolutePath());
         if (context.getServiceClient() == null) {
             showToastMessage("Service client not found?!");
