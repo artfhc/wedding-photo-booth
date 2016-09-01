@@ -16,17 +16,17 @@
  */
 package com.groundupworks.flyingphotobooth.controllers;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Message;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.WorkerThread;
 import android.util.Log;
 import com.groundupworks.flyingphotobooth.MyApplication;
 import com.groundupworks.flyingphotobooth.R;
 import com.groundupworks.flyingphotobooth.client.ServiceClient;
-import com.groundupworks.flyingphotobooth.client.ServiceGenerator;
 import com.groundupworks.flyingphotobooth.fragments.ShareFragment;
 import com.groundupworks.lib.photobooth.arrangements.BoxArrangement;
 import com.groundupworks.lib.photobooth.arrangements.HorizontalArrangement;
@@ -103,34 +103,7 @@ public class ShareController extends BaseController {
         final MyApplication context = (MyApplication) MyApplication.getContext();
         switch (msg.what) {
             case ShareFragment.UPLOAD_TO_SERVER:
-                final ServiceClient.FileUploadPayload payload = (ServiceClient.FileUploadPayload) msg.obj;
-                Log.i(TAG, "Ready to upload file: " + payload.file.getAbsolutePath());
-
-                // create RequestBody instance from file
-                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), payload.file);
-
-                // MultipartBody.Part is used to send also the actual file name
-                RequestBody sessionId = RequestBody.create(MediaType.parse("multipart/form-data"), payload.sessionId);
-                MultipartBody.Part body = MultipartBody.Part.createFormData("thumbnail", payload.file.getName(), requestFile);
-                Call<ResponseBody> call = context.getServiceClient().uploadFile(sessionId, body);
-                call.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        Message message = Message.obtain();
-                        message.what = SHOW_TOAST_MESSAGE;
-                        message.obj = "success file path: " + payload.file.getAbsolutePath();
-                        sendUiUpdate(message);
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.e("Upload error:", t.getMessage());
-                        Message message = Message.obtain();
-                        message.what = SHOW_TOAST_MESSAGE;
-                        message.obj = "Upload error: " + t.getMessage();
-                        sendUiUpdate(message);
-                    }
-                });
+                uploadMessageToServer(context, (ServiceClient.FileUploadPayload) msg.obj);
                 break;
             case ShareFragment.IMAGE_VIEW_READY:
 
@@ -365,6 +338,41 @@ public class ShareController extends BaseController {
             default:
                 break;
         }
+    }
+
+    @WorkerThread
+    private void uploadMessageToServer(@NonNull MyApplication context, @NonNull ServiceClient.FileUploadPayload payload) {
+        Log.i(TAG, "Ready to upload file: " + payload.file.getAbsolutePath());
+        if (context.getServiceClient() == null) {
+            showToastMessage("Service client not found?!");
+        }
+
+        // create RequestBody instance from file
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), payload.file);
+
+        // MultipartBody.Part is used to send also the actual file name
+        RequestBody sessionId = RequestBody.create(MediaType.parse("multipart/form-data"), payload.sessionId);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("thumbnail", payload.file.getName(), requestFile);
+        Call<ResponseBody> call = context.getServiceClient().uploadFile(sessionId, body);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                showToastMessage("success file path: " + payload.file.getAbsolutePath());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Upload error:", t.getMessage());
+                showToastMessage("Upload error: " + t.getMessage());
+            }
+        });
+    }
+
+    private void showToastMessage(@NonNull String messageString) {
+        Message message = Message.obtain();
+        message.what = SHOW_TOAST_MESSAGE;
+        message.obj = messageString;
+        sendUiUpdate(message);
     }
 
     //
