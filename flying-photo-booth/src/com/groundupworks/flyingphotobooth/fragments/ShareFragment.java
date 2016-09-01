@@ -23,7 +23,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
@@ -39,6 +38,7 @@ import android.widget.Toast;
 
 import com.groundupworks.flyingphotobooth.LaunchActivity;
 import com.groundupworks.flyingphotobooth.R;
+import com.groundupworks.flyingphotobooth.client.ServiceClient;
 import com.groundupworks.flyingphotobooth.controllers.ShareController;
 import com.groundupworks.lib.photobooth.framework.ControllerBackedFragment;
 import com.groundupworks.lib.photobooth.helpers.BeamHelper;
@@ -50,6 +50,7 @@ import com.groundupworks.wings.facebook.FacebookEndpoint;
 import com.groundupworks.wings.gcp.GoogleCloudPrintEndpoint;
 import com.squareup.otto.Subscribe;
 
+import java.io.File;
 import java.util.Set;
 import java.util.UUID;
 
@@ -83,6 +84,8 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
     public static final int FACEBOOK_SHARE_REQUESTED = 3;
 
     public static final int DROPBOX_SHARE_REQUESTED = 4;
+
+    public static final int UPLOAD_TO_SERVER = 5;
 
     //
     // Message bundle keys.
@@ -191,7 +194,7 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
         mGcpButton.setVisibility(View.GONE);
         mFacebookButton.setVisibility(View.GONE);
         mDropboxButton.setVisibility(View.GONE);
-        mShareButton.setVisibility(View.GONE);
+        // mShareButton.setVisibility(View.GONE);
         return view;
     }
 
@@ -241,11 +244,15 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
             public void onClick(View v) {
                 Uri jpegUri = mJpegUri;
                 if (jpegUri != null) {
-                    // Launch sharing Intent.
-                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                    sharingIntent.setType(ImageHelper.JPEG_MIME_TYPE);
-                    sharingIntent.putExtra(Intent.EXTRA_STREAM, jpegUri);
-                    startActivity(Intent.createChooser(sharingIntent, getString(R.string.share__share_chooser_title)));
+                    Message msg = Message.obtain();
+                    msg.what = UPLOAD_TO_SERVER;
+                    msg.obj = new ServiceClient.FileUploadPayload(mPhotoID.toString(), new File(jpegUri.getPath()));
+                    sendEvent(msg);
+//                    // Launch sharing Intent.
+//                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+//                    sharingIntent.setType(ImageHelper.JPEG_MIME_TYPE);
+//                    sharingIntent.putExtra(Intent.EXTRA_STREAM, jpegUri);
+//                    startActivity(Intent.createChooser(sharingIntent, getString(R.string.share__share_chooser_title)));
                 }
             }
         });
@@ -450,7 +457,7 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
     @Override
     public void handleUiUpdate(Message msg) {
         Activity activity = getActivity();
-        final Context appContext = activity.getApplicationContext();
+        // final Context appContext = activity.getApplicationContext();
 
         switch (msg.what) {
             case ShareController.ERROR_OCCURRED:
@@ -487,10 +494,10 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
                 mPhotoID = UUID.randomUUID();
                 mPhotoIDTextView.setText("Your photo ID is:\n"+mPhotoID.toString());
                 // TODO: upload photo to file server
-                /*
                 // Enable sharing options.
                 mShareButton.setEnabled(true);
 
+                /*
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
                 if (mDropboxEndpoint.isLinked() && preferences.getBoolean(getString(R.string.pref__dropbox_auto_share_key), false)) {
                     requestShare(DROPBOX_SHARE_REQUESTED);
@@ -530,6 +537,9 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
                 break;
             case ShareController.DROPBOX_SHARE_MARKED:
                 mDropboxButton.setEnabled(false);
+                break;
+            case ShareController.SHOW_TOAST_MESSAGE:
+                Toast.makeText(getActivity(), (String) msg.obj, Toast.LENGTH_LONG).show();
                 break;
             default:
                 break;

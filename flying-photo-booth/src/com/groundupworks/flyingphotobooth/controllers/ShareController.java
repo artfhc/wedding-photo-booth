@@ -22,8 +22,11 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Message;
 
+import android.util.Log;
 import com.groundupworks.flyingphotobooth.MyApplication;
 import com.groundupworks.flyingphotobooth.R;
+import com.groundupworks.flyingphotobooth.client.ServiceClient;
+import com.groundupworks.flyingphotobooth.client.ServiceGenerator;
 import com.groundupworks.flyingphotobooth.fragments.ShareFragment;
 import com.groundupworks.lib.photobooth.arrangements.BoxArrangement;
 import com.groundupworks.lib.photobooth.arrangements.HorizontalArrangement;
@@ -39,6 +42,13 @@ import com.groundupworks.wings.Wings;
 import com.groundupworks.wings.dropbox.DropboxEndpoint;
 import com.groundupworks.wings.facebook.FacebookEndpoint;
 import com.groundupworks.wings.gcp.GoogleCloudPrintEndpoint;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -53,6 +63,8 @@ import java.io.OutputStream;
  * @author Benedict Lau
  */
 public class ShareController extends BaseController {
+
+    private static final String TAG = ShareController.class.getCanonicalName();
 
     //
     // Controller events. The ui should be notified of these events.
@@ -70,6 +82,8 @@ public class ShareController extends BaseController {
 
     public static final int DROPBOX_SHARE_MARKED = 4;
 
+    public static final int SHOW_TOAST_MESSAGE = 5;
+
     private String mJpegPath = null;
 
     private Bitmap mThumb = null;
@@ -86,8 +100,38 @@ public class ShareController extends BaseController {
 
     @Override
     protected void handleEvent(Message msg) {
-        final Context context = MyApplication.getContext();
+        final MyApplication context = (MyApplication) MyApplication.getContext();
         switch (msg.what) {
+            case ShareFragment.UPLOAD_TO_SERVER:
+                final ServiceClient.FileUploadPayload payload = (ServiceClient.FileUploadPayload) msg.obj;
+                Log.i(TAG, "Ready to upload file: " + payload.file.getAbsolutePath());
+
+                // create RequestBody instance from file
+                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), payload.file);
+
+                // MultipartBody.Part is used to send also the actual file name
+                RequestBody sessionId = RequestBody.create(MediaType.parse("multipart/form-data"), payload.sessionId);
+                MultipartBody.Part body = MultipartBody.Part.createFormData("thumbnail", payload.file.getName(), requestFile);
+                Call<ResponseBody> call = context.getServiceClient().uploadFile(sessionId, body);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        Message message = Message.obtain();
+                        message.what = SHOW_TOAST_MESSAGE;
+                        message.obj = "success file path: " + payload.file.getAbsolutePath();
+                        sendUiUpdate(message);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.e("Upload error:", t.getMessage());
+                        Message message = Message.obtain();
+                        message.what = SHOW_TOAST_MESSAGE;
+                        message.obj = "Upload error: " + t.getMessage();
+                        sendUiUpdate(message);
+                    }
+                });
+                break;
             case ShareFragment.IMAGE_VIEW_READY:
 
                 /*
