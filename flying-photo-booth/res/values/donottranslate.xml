@@ -4,6 +4,7 @@
     <!-- Image Helper -->
     <string name="image_helper__image_folder_name">FlyingPhotoBooth</string>
     <string name="image_helper__image_filename_prefix">fpb</string>
+    <string name="image_helper__image_filename_square_prefix">fpb_square</string>
 
     <!-- Facebook Client Overrides -->
     <string name="wings_facebook__app_id">208629902615310</string>

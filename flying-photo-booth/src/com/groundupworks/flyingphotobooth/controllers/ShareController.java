@@ -16,6 +16,7 @@
  */
 package com.groundupworks.flyingphotobooth.controllers;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -52,10 +53,11 @@ import retrofit2.Response;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Controller class for the {@link ShareFragment}.
@@ -111,6 +113,7 @@ public class ShareController extends BaseController {
                  * Create an image bitmap from Jpeg data.
                  */
                 Bundle bundle = msg.getData();
+                String imageDirectory = ImageHelper.getCapturedImageDirectory(context.getString(R.string.image_helper__image_folder_name));
 
                 int jpegDataLength = 0;
                 for (int i = 0; i < ShareFragment.MESSAGE_BUNDLE_KEY_JPEG_DATA.length; i++) {
@@ -196,6 +199,12 @@ public class ShareController extends BaseController {
                     }
                 }
 
+                // Store all the bitmaps in file system
+                List<String> paths = new ArrayList<>();
+                if (isFramesValid) {
+                    paths.addAll(writeActualBitmapToDisc(imageDirectory, bitmaps, context));
+                }
+
                 // Create photo strip if all frames are valid.
                 Bitmap photoStrip = null;
                 if (isFramesValid) {
@@ -235,26 +244,20 @@ public class ShareController extends BaseController {
                  * Save image bitmap as Jpeg.
                  */
                 try {
-                    String imageDirectory = ImageHelper.getCapturedImageDirectory(context
-                            .getString(R.string.image_helper__image_folder_name));
                     if (imageDirectory != null) {
                         String imageName = ImageHelper.generateCapturedImageName(context
                                 .getString(R.string.image_helper__image_filename_prefix));
                         File file = new File(imageDirectory, imageName);
-                        final OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file));
-
-                        // Convert to Jpeg and writes to file.
-                        boolean isSuccessful = ImageHelper.writeJpeg(photoStrip, outputStream);
-                        outputStream.flush();
-                        outputStream.close();
+                        boolean isSuccessful = writeBitmapToDisc(file, photoStrip);
 
                         if (isSuccessful) {
                             mJpegPath = file.getPath();
+                            paths.add(0, mJpegPath);
 
                             // Notify ui the Jpeg is saved.
                             Message uiMsg = Message.obtain();
                             uiMsg.what = JPEG_SAVED;
-                            uiMsg.obj = mJpegPath;
+                            uiMsg.obj = paths.toArray(new String[paths.size()]);
                             sendUiUpdate(uiMsg);
                         } else {
                             reportError();
@@ -263,8 +266,6 @@ public class ShareController extends BaseController {
                         // Invalid external storage state or failed directory creation.
                         reportError();
                     }
-                } catch (FileNotFoundException e) {
-                    reportError();
                 } catch (IOException e) {
                     reportError();
                 }
@@ -340,24 +341,56 @@ public class ShareController extends BaseController {
         }
     }
 
+    @NonNull
+    private List<String> writeActualBitmapToDisc(@NonNull String imageDirectory, @NonNull Bitmap[] bitmaps, @NonNull Context context) {
+        List<String> paths = new ArrayList<>();
+        for (int i = 0; i< bitmaps.length; i++) {
+            try {
+                String imageName = ImageHelper.generateCapturedImageName(context.getString(R.string.image_helper__image_filename_square_prefix));
+                File file = new File(imageDirectory, imageName);
+                boolean isSuccessful = writeBitmapToDisc(file, bitmaps[i]);
+                if (isSuccessful) {
+                    paths.add(file.getPath());
+                } else {
+                    Log.e(TAG, "Problem output file: " + i + " | " + imageName);
+                }
+            } catch (IOException ex) {
+                Log.e(TAG, "Exception: Problem output file: " + i, ex);
+            }
+        }
+        return paths;
+    }
+
+    private boolean writeBitmapToDisc(@NonNull File file, @NonNull Bitmap photoStrip) throws IOException {
+        final OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file));
+
+        // Convert to Jpeg and writes to file.
+        boolean isSuccessful = ImageHelper.writeJpeg(photoStrip, outputStream);
+        outputStream.flush();
+        outputStream.close();
+
+        return isSuccessful;
+    }
+
     @WorkerThread
     private void uploadMessageToServer(@NonNull MyApplication context, @NonNull final ServiceClient.FileUploadPayload payload) {
-        Log.i(TAG, "Ready to upload file: " + payload.file.getAbsolutePath());
+        Log.i(TAG, "Ready to upload file: " + payload.files[0].getAbsolutePath());
         if (context.getServiceClient() == null) {
             showToastMessage("Service client not found?!");
         }
 
-        // create RequestBody instance from file
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), payload.file);
-
         // MultipartBody.Part is used to send also the actual file name
         RequestBody sessionId = RequestBody.create(MediaType.parse("multipart/form-data"), payload.sessionId);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("thumbnail", payload.file.getName(), requestFile);
-        Call<ResponseBody> call = context.getServiceClient().uploadFile(sessionId, body);
+        MultipartBody.Part body = getMultipartBody(payload.files[0], "image");
+        MultipartBody.Part square1 = getMultipartBody(payload.files[1], "square1");
+        MultipartBody.Part square2 = getMultipartBody(payload.files[2], "square2");
+        MultipartBody.Part square3 = getMultipartBody(payload.files[3], "square3");
+        MultipartBody.Part square4 = getMultipartBody(payload.files[4], "square4");
+        Call<ResponseBody> call = context.getServiceClient().uploadFile(sessionId, body, square1, square2, square3, square4);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                showToastMessage("success file path: " + payload.file.getAbsolutePath());
+                showToastMessage("success file path: " + payload.files[0].getAbsolutePath());
             }
 
             @Override
@@ -366,6 +399,12 @@ public class ShareController extends BaseController {
                 showToastMessage("Upload error: " + t.getMessage());
             }
         });
+    }
+
+    @NonNull
+    private MultipartBody.Part getMultipartBody(@NonNull File file, @NonNull String fieldName) {
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        return MultipartBody.Part.createFormData(fieldName, file.getName(), requestFile);
     }
 
     private void showToastMessage(@NonNull String messageString) {

@@ -21,7 +21,14 @@ router.get('/ping', function(req, res, next) {
   res.send({ title: 'Express', content: 'Express content', count: 3 });
 });
 
-router.post('/file-upload', upload.single('thumbnail'), function(req, res, next) {
+
+var cpUpload = upload.fields([
+  { name: 'image', maxCount: 1 },
+  { name: 'square1', maxCount: 1 },
+  { name: 'square2', maxCount: 1 },
+  { name: 'square3', maxCount: 1 },
+  { name: 'square4', maxCount: 1 }]);
+router.post('/file-upload', cpUpload, function(req, res, next) {
     console.log(req.body);
     console.log(req.file);
     res.render('index', { title: 'Upload done' });

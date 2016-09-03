@@ -26,6 +26,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,8 @@ import com.groundupworks.wings.gcp.GoogleCloudPrintEndpoint;
 import com.squareup.otto.Subscribe;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -107,7 +110,8 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
     /**
      * The uri to the Jpeg stored in the file system.
      */
-    private Uri mJpegUri = null;
+    // private Uri mJpegUri = null;
+    private Uri[] mJpegUris = null;
 
     //
     // Google Cloud Print share with Wings.
@@ -241,11 +245,11 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
         mShareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri jpegUri = mJpegUri;
-                if (jpegUri != null) {
+                Uri[] jpegUris = mJpegUris;
+                if (jpegUris != null) {
                     Message msg = Message.obtain();
                     msg.what = UPLOAD_TO_SERVER;
-                    msg.obj = new ServiceClient.FileUploadPayload(mPhotoID.toString(), new File(jpegUri.getPath()));
+                    msg.obj = new ServiceClient.FileUploadPayload(mPhotoID.toString(), jpegUris);
                     sendEvent(msg);
 //                    // Launch sharing Intent.
 //                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
@@ -489,7 +493,7 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
                 imageView.setImageBitmap(thumbBitmap);
                 break;
             case ShareController.JPEG_SAVED:
-                mJpegUri = Uri.parse("file://" + (String) msg.obj);
+                mJpegUris = getUriPaths((String[]) msg.obj);
                 mPhotoID = UUID.randomUUID();
                 mPhotoIDTextView.setText("Your photo ID is:\n"+mPhotoID.toString());
                 // TODO: upload photo to file server
@@ -543,6 +547,15 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
             default:
                 break;
         }
+    }
+
+    @NonNull
+    private Uri[] getUriPaths(String[] paths) {
+        Uri[] uriList = new Uri[paths.length];
+        for (int i = 0; i < paths.length; i++) {
+            uriList[i] = Uri.parse("file://" + paths[i]);
+        }
+        return uriList;
     }
 
     //
