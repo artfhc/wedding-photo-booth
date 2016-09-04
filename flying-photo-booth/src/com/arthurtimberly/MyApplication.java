@@ -16,25 +16,35 @@
  */
 package com.arthurtimberly;
 
-import android.support.annotation.Nullable;
+import android.support.annotation.IntRange;
+import android.support.annotation.NonNull;
 import com.arthurtimberly.client.ServiceClient;
 import com.arthurtimberly.client.ServiceGenerator;
 import com.groundupworks.lib.photobooth.framework.BaseApplication;
+
+import java.util.Random;
 
 /**
  * A concrete {@link BaseApplication} class.
  */
 public class MyApplication extends BaseApplication {
     private ServiceClient serviceClient;
+    private Random random;
 
     @Override
     public void onCreate() {
         super.onCreate();
         serviceClient = ServiceGenerator.createService(ServiceClient.class);
+        random = new Random();
     }
 
-    @Nullable
+    @NonNull
     public ServiceClient getServiceClient() {
         return serviceClient;
+    }
+
+    @IntRange(from=100000, to=999999)
+    public long getSixDigitUniqueId() {
+        return 100000 + random.nextInt(900000);
     }
 }

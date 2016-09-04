@@ -37,6 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arthurtimberly.LaunchActivity;
+import com.arthurtimberly.MyApplication;
 import com.arthurtimberly.R;
 import com.arthurtimberly.client.ServiceClient;
 import com.arthurtimberly.controllers.ShareController;
@@ -51,7 +52,6 @@ import com.groundupworks.wings.gcp.GoogleCloudPrintEndpoint;
 import com.squareup.otto.Subscribe;
 
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * Ui for the image confirmation screen.
@@ -153,7 +153,7 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
     /**
      * Unique Photo ID. May be null, generated when image is saved
      */
-    private UUID mPhotoID = null;
+    private long mPhotoID = -1;
 
     //
     // Views.
@@ -244,7 +244,7 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
                 if (jpegUris != null) {
                     Message msg = Message.obtain();
                     msg.what = UPLOAD_TO_SERVER;
-                    msg.obj = new ServiceClient.FileUploadPayload(mPhotoID.toString(), jpegUris);
+                    msg.obj = new ServiceClient.FileUploadPayload(String.valueOf(mPhotoID), jpegUris);
                     sendEvent(msg);
 //                    // Launch sharing Intent.
 //                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
@@ -488,9 +488,10 @@ public class ShareFragment extends ControllerBackedFragment<ShareController> {
                 imageView.setImageBitmap(thumbBitmap);
                 break;
             case ShareController.JPEG_SAVED:
+                final MyApplication context = (MyApplication) MyApplication.getContext();
                 mJpegUris = getUriPaths((String[]) msg.obj);
-                mPhotoID = UUID.randomUUID();
-                mPhotoIDTextView.setText("Your photo ID is:\n"+mPhotoID.toString());
+                mPhotoID = context.getSixDigitUniqueId();
+                mPhotoIDTextView.setText("Your photo ID is:\n"+String.valueOf(mPhotoID));
                 // TODO: upload photo to file server
                 // Enable sharing options.
                 mShareButton.setEnabled(true);
