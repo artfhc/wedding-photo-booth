@@ -1,3 +1,2 @@
 include ':flying-photo-booth'
-include ':party-photo-booth'
 include ':lib-photo-booth'

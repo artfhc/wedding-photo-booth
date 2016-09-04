@@ -75,13 +75,6 @@ To compile the applications you must have the [Android SDK](http://developer.and
 ```
 ./gradlew :flying-photo-booth:installDebug
 ```
-
-Or **Party PhotoBooth** with:
-
-```
-./gradlew :party-photo-booth:installDebug
-```
-
 Some Wings Sharing endpoints may not work on your custom build as API keys from the service providers may be pinned to the release signing keys. You should find **donottranslate.xml** in each application and replace all API keys.
 
 If you plan on distributing a fork of these applications, you must replace the following:
