@@ -984,8 +984,12 @@ public class CaptureFragment extends Fragment {
      * Launches the next {@link Fragment}.
      */
     private void nextFragment() {
+        //((LaunchActivity) getActivity()).replaceFragment(
+        //        ShareFragment.newInstance(mFramesData, mPreviewDisplayOrientation, mIsReflected), true, false);
+
+
         ((LaunchActivity) getActivity()).replaceFragment(
-                ShareFragment.newInstance(mFramesData, mPreviewDisplayOrientation, mIsReflected), true, false);
+                SelectFilterFragment.newInstance(mFramesData, mPreviewDisplayOrientation, mIsReflected), true, false);
     }
 
     /**

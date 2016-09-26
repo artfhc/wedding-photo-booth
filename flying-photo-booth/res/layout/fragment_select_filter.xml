@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/background_color"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Text"
+        android:text="Select Filter:"/>
+    <RadioGroup
+        android:id="@+id/filter_radio_group"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        style="@style/Text"
+        android:orientation="vertical">
+    </RadioGroup>
+    <Button
+        android:id="@+id/next_button"
+        style="@style/Text"
+        android:text="Next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dip"
+        android:background="@drawable/selector_button" />
+</LinearLayout>
