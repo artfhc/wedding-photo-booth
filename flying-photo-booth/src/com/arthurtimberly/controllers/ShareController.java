@@ -29,9 +29,9 @@ import com.arthurtimberly.MyApplication;
 import com.arthurtimberly.R;
 import com.arthurtimberly.client.ServiceClient;
 import com.arthurtimberly.fragments.ShareFragment;
-import com.groundupworks.lib.photobooth.arrangements.BoxArrangement;
 import com.groundupworks.lib.photobooth.arrangements.HorizontalArrangement;
 import com.groundupworks.lib.photobooth.arrangements.VerticalArrangement;
+import com.groundupworks.lib.photobooth.arrangements.WeddingArrangement;
 import com.groundupworks.lib.photobooth.filters.BlackAndWhiteFilter;
 import com.groundupworks.lib.photobooth.filters.LineArtFilter;
 import com.groundupworks.lib.photobooth.filters.SepiaFilter;
@@ -176,7 +176,9 @@ public class ShareController extends BaseController {
                 if (arrangementPref.equals(context.getString(R.string.pref__arrangement_horizontal))) {
                     arrangement = new HorizontalArrangement();
                 } else if (arrangementPref.equals(context.getString(R.string.pref__arrangement_box))) {
-                    arrangement = new BoxArrangement();
+                    arrangement = new WeddingArrangement(context, "bg-image.jpg");
+//                } else if (arrangementPref.equals(context.getString(R.string.pref__arrangement_box))) {
+//                    arrangement = new BoxArrangement();
                 } else {
                     arrangement = new VerticalArrangement();
                 }

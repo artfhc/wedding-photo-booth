@@ -33,7 +33,7 @@ public abstract class BaseArrangement implements Arrangement {
     /**
      * Photo strip panel padding.
      */
-    public static final int PHOTO_STRIP_PANEL_PADDING = 50;
+    public static final int PHOTO_STRIP_PANEL_PADDING = 55;
 
     //
     // Private methods.

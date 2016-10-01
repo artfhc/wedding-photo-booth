@@ -50,7 +50,7 @@ public class ImageHelper {
     /**
      * The width and height of an image.
      */
-    public static final int IMAGE_SIZE = 600;
+    public static final int IMAGE_SIZE = 480;
 
     /**
      * Bitmap configuration.
